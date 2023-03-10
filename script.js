@@ -10,42 +10,68 @@ let value;
 let sign = ''
 let deletenum = document.querySelector(".delete")
 let allClear = document.getElementById("allClear")
+let prev;
+let curr;
 
-function displayNumbers(){
-  numbers.forEach(num => {
-    num.addEventListener("click", () => {
-      let currentValue
-      currentValue = `${currentOperand.innerHTML}${num.innerHTML}`
-      currentOperand.textContent = currentValue
-    })
+numbers.forEach(num => {
+  num.addEventListener("click", () => {
+    currentValue = `${currentOperand.innerHTML}${num.innerHTML}`
+    currentOperand.textContent = currentValue
   })
-  console.log("hello")
-}
-displayNumbers()
+})
+console.log("hello")
+
 
 addition.addEventListener("click", () => {
+  sign = "+"
+  prev  = parseFloat(previousOperand.textContent)
+  curr  = parseFloat(currentOperand.textContent)
+  let calcVal = prev+curr
+  if(previousOperand.textContent !== ""){
+    console.log(calcVal)
+    currentOperand.textContent = calcVal
+  }
   let operation = addition.innerHTML
   changeOperand(operation)
-  sign = "+"
- 
 })
 
 multiply.addEventListener("click", () => {
+  sign = "*"
+  prev  = parseFloat(previousOperand.textContent)
+  curr  = parseFloat(currentOperand.textContent)
+  let calcVal = prev * curr
+  if(previousOperand.textContent !== ""){
+    console.log(calcVal)
+    currentOperand.textContent = calcVal
+  }
   let operation = multiply.innerHTML
   changeOperand(operation)
-  sign = "*"
 })
 
 divide.addEventListener("click", () => {
+  sign = "/"
+  prev  = parseFloat(previousOperand.textContent)
+  curr  = parseFloat(currentOperand.textContent)
+  let calcVal = prev / curr
+  if(previousOperand.textContent !== ""){
+    console.log(calcVal)
+    currentOperand.textContent = calcVal
+  }
   let operation = divide.innerHTML
   changeOperand(operation)
-  sign = "/"
 })
 
 subtract.addEventListener("click", () => {
+  sign = "-"
+  prev  = parseFloat(previousOperand.textContent)
+  curr  = parseFloat(currentOperand.textContent)
+  let calcVal = prev - curr
+  if(previousOperand.textContent !== ""){
+    console.log(calcVal)
+    currentOperand.textContent = calcVal
+  }
   let operation = subtract.innerHTML
   changeOperand(operation)
-  sign = "-"
 })
 
 deletenum.addEventListener("click", () => {
@@ -67,7 +93,8 @@ function changeOperand(operation){
 }
 
 evaluate.addEventListener("click", () => {
-  switch(sign){
+  if(isNaN(currentOperand.textContent)) return;
+  switch(sign){ 
     case  "+" :
       addNum()
       break;
@@ -80,17 +107,21 @@ evaluate.addEventListener("click", () => {
     case "/" :
       divideNum()
       break;
+    default :
+    return;
   }
   previousOperand.textContent = ""
   currentOperand.textContent = value
-  console.log( value)
+  if(isNaN(currentOperand.textContent)){
+    currentOperand.textContent = ""
+  }
+
 })
 
 function addNum (){
   prevIndex = previousOperand.textContent.slice(0, -1)
-  let prev = parseFloat(prevIndex)
-  console.log(prev)
-  let curr = parseFloat(currentOperand.textContent)
+  prev = parseFloat(prevIndex)
+  curr = parseFloat(currentOperand.textContent)
   value = prev + curr
 }
 
@@ -117,8 +148,3 @@ function subtractNum (){
   console.log(curr)
 }
 
-// addition.addEventListener("click", () => {
-//   let val1 = previousOperand.textContent.slice(0, -1)
-//   let val2 = currentOperand.textContent
-//   console.log(parseInt(val1 + val2))
-// })
